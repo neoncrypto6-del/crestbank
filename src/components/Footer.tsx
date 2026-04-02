@@ -17,7 +17,7 @@ export function Footer() {
           <a href="#/" className="flex items-center">
             <img
               src="/chasebank.png"
-              alt="Chase"
+              alt="Crest"
               className="h-8 object-contain" />
             
           </a>
@@ -40,7 +40,7 @@ export function Footer() {
                 href="#/feature/checking"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase Total Checking®
+                Crest Total Checking®
               </a>{' '}
               offer for new customers. Make purchases with your debit card, and
               bank from almost anywhere by phone, tablet or computer and more
@@ -72,7 +72,7 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-gray-900 mb-4">Credit Cards</h4>
             <p className="mb-4">
-              Chase{' '}
+              Crest{' '}
               <a
                 href="#/feature/credit-cards"
                 className="text-[#0060AF] hover:underline">
@@ -128,7 +128,7 @@ export function Footer() {
                 
                 refinance your mortgage
               </a>{' '}
-              with Chase. View today's{' '}
+              with Crest. View today's{' '}
               <a
                 href="#/feature/home-loans"
                 className="text-[#0060AF] hover:underline">
@@ -165,7 +165,7 @@ export function Footer() {
                 href="#/feature/auto"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase Auto
+                Crest Auto
               </a>{' '}
               is here to help you get the right car. Apply for{' '}
               <a
@@ -174,7 +174,7 @@ export function Footer() {
                 
                 auto financing
               </a>{' '}
-              for a new or used car with Chase. Use the{' '}
+              for a new or used car with Crest. Use the{' '}
               <a
                 href="#/feature/auto"
                 className="text-[#0060AF] hover:underline">
@@ -186,7 +186,7 @@ export function Footer() {
                 href="#/feature/auto"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase Auto Education Center
+                Crest Auto Education Center
               </a>{' '}
               to get car guidance from a trusted source.
             </p>
@@ -194,7 +194,7 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-gray-900 mb-4">Chase for Business</h4>
             <p>
-              With Chase for Business you'll receive guidance from a team of
+              With Crest for Business you'll receive guidance from a team of
               business professionals who specialize in helping improve cash
               flow, providing credit solutions, and managing payroll. Choose
               from{' '}
@@ -240,13 +240,13 @@ export function Footer() {
               Sports & Entertainment
             </h4>
             <p>
-              Chase gives you access to unique sports, entertainment and
+              Crest gives you access to unique sports, entertainment and
               culinary events through{' '}
               <a
                 href="#/feature/entertainment"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase Experiences
+                Crest Experiences
               </a>{' '}
               and our exclusive partnerships such as the{' '}
               <a
@@ -267,14 +267,14 @@ export function Footer() {
                 href="#/feature/entertainment"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase Center
+                Crest Center
               </a>
               .
             </p>
           </div>
           <div>
             <h4 className="font-bold text-gray-900 mb-4">
-              Chase Security Center
+              Crest Security Center
             </h4>
             <p>
               Our{' '}
@@ -332,16 +332,16 @@ export function Footer() {
         {/* Tertiary Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 text-sm text-gray-600">
           <div>
-            <h4 className="font-bold text-gray-900 mb-4">About Chase</h4>
+            <h4 className="font-bold text-gray-900 mb-4">About Crest</h4>
             <p>
-              Chase serves millions of people with a broad range of products.{' '}
+              Crest serves millions of people with a broad range of products.{' '}
               <a
                 href="#/feature/about"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase online
+                Crest online
               </a>{' '}
-              lets you manage your Chase accounts, view statements, monitor
+              lets you manage your Crest accounts, view statements, monitor
               activity, pay bills or transfer funds securely from one central
               place. To learn more, visit the{' '}
               <a
@@ -355,21 +355,21 @@ export function Footer() {
                 href="#/feature/about"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase customer service
+                Crest customer service
               </a>{' '}
               or let us know about{' '}
               <a
                 href="#/feature/about"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase complaints and feedback
+                Crest complaints and feedback
               </a>
               . View the{' '}
               <a
                 href="#/feature/about"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase Community Reinvestment Act Public File
+                Crest Community Reinvestment Act Public File
               </a>{' '}
               for the bank's latest CRA rating and other CRA-related
               information.
@@ -377,7 +377,7 @@ export function Footer() {
           </div>
           <div>
             <h4 className="font-bold text-gray-900 mb-4">
-              Investing by J.P. Morgan
+              Investing by crypto
             </h4>
             <p className="mb-4">
               Partner with a global leader who puts your financial needs first.{' '}
@@ -431,8 +431,8 @@ export function Footer() {
               <li>NOT FDIC INSURED</li>
               <li>NOT INSURED BY ANY FEDERAL GOVERNMENT AGENCY</li>
               <li>
-                NOT A DEPOSIT OR OTHER OBLIGATION OF, OR GUARANTEED BY, JPMORGAN
-                CHASE BANK, N.A. OR ANY OF ITS AFFILIATES
+                NOT A DEPOSIT OR OTHER OBLIGATION OF, OR GUARANTEED BY,
+                CREST BANK, N.A. OR ANY OF ITS AFFILIATES
               </li>
               <li>
                 SUBJECT TO INVESTMENT RISKS, INCLUDING POSSIBLE LOSS OF THE
@@ -442,7 +442,7 @@ export function Footer() {
           </div>
           <div>
             <h4 className="font-bold text-gray-900 mb-4">
-              Chase Private Client
+              Crest Private Client
             </h4>
             <p className="mb-4">
               Get more from a personalized relationship offering{' '}
@@ -471,7 +471,7 @@ export function Footer() {
                 href="#/feature/private-client"
                 className="text-[#0060AF] hover:underline">
                 
-                Chase branch
+                Crest branch
               </a>{' '}
               to learn about eligibility requirements and all available
               benefits.
@@ -551,24 +551,24 @@ export function Footer() {
 
         <div className="text-xs text-gray-500 space-y-4 mb-8">
           <p>
-            "Chase," "JPMorgan," "JPMorgan Chase," the JPMorgan Chase logo and
-            the Octagon Symbol are trademarks of JPMorgan Chase Bank, N.A.
-            JPMorgan Chase Bank, N.A. is a wholly-owned subsidiary of JPMorgan
-            Chase & Co.
+            "Crest,"" the Anthony Crest logo and
+            the C Symbol are trademarks of Anthony Crest Bank, N.A.
+            Anthony Crest Bank, N.A. is a wholly-owned subsidiary of Anthony
+            Crest & Co.
           </p>
           <p>
             Bank deposit accounts, such as checking and savings, may be subject
             to approval. Deposit products and related services are offered by
-            JPMorgan Chase Bank, N.A. Member FDIC.
+            Crest Bank, N.A. Member FDIC.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-gray-600 mb-8">
           <a href="#" className="hover:underline">
-            J.P. Morgan
+            Anthony Crest
           </a>
           <a href="#" className="hover:underline">
-            JPMorganChase
+            AnthonyCrest
           </a>
           <a href="#" className="hover:underline">
             Media Center
