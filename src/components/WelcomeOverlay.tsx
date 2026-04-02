@@ -15,7 +15,7 @@ export function WelcomeOverlay() {
   if (!isOpen || !user) return null;
   const message =
   user.welcome_message ||
-  'Welcome to Chase Online Banking! Your secure gateway to managing your finances.';
+  'Welcome to Crest Online Banking! Your secure gateway to managing your finances.';
   return (
     <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-300">
@@ -28,7 +28,7 @@ export function WelcomeOverlay() {
           </button>
           <img
             src="/chasebank.png"
-            alt="Chase"
+            alt="Crest"
             className="h-8 mx-auto mb-4 brightness-0 invert" />
           
           <h2 className="text-2xl font-light">
