@@ -10,7 +10,7 @@ export function BusinessSection() {
               Keep your business moving forward with Chase
             </h2>
             <p className="text-lg text-gray-700 mb-8">
-              Open a new Chase Business Complete Checking® account with
+              Open a new Crest Business Complete Checking® account with
               qualifying activities. For new business checking customers only.
             </p>
             <a
