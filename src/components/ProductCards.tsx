@@ -5,10 +5,10 @@ export function ProductCards() {
     <section className="w-full py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Chase Credit Cards */}
+          {/* Card 1: Crest Credit Cards */}
           <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <div className="bg-[#0060AF] text-white p-6 flex justify-between items-center h-24">
-              <h3 className="text-xl font-semibold">Chase Credit Cards</h3>
+              <h3 className="text-xl font-semibold">Crest Credit Cards</h3>
               <CreditCard className="w-10 h-10 opacity-90" strokeWidth={1.5} />
             </div>
             <div className="p-6 flex flex-col flex-grow bg-white">
@@ -16,7 +16,7 @@ export function ProductCards() {
                 See if you're preapproved
               </h4>
               <p className="text-gray-700 mb-8 flex-grow">
-                Learn which Chase Credit Cards you're preapproved for in just a
+                Learn which Crest Credit Cards you're preapproved for in just a
                 few moments. Plus, there's no impact to your credit score.
               </p>
               <button className="bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
@@ -25,11 +25,11 @@ export function ProductCards() {
             </div>
           </div>
 
-          {/* Card 2: Chase Sapphire Preferred */}
+          {/* Card 2: Crest Sapphire Preferred */}
           <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <div className="bg-[#003A70] text-white p-6 flex justify-between items-center h-24">
               <h3 className="text-xl font-semibold pr-4">
-                Chase Sapphire Preferred®
+                Crest Sapphire Preferred®
               </h3>
               <CreditCard
                 className="w-10 h-10 opacity-90 flex-shrink-0"
@@ -41,7 +41,7 @@ export function ProductCards() {
                 Earn 75,000 bonus points
               </h4>
               <p className="text-gray-700 mb-8 flex-grow">
-                Plus, earn 5x total points on Chase Travel℠, 3x points on
+                Plus, earn 5x total points on Crest Travel℠, 3x points on
                 dining, 2x points on all other travel purchases, and more. Terms
                 apply.
               </p>
@@ -51,10 +51,10 @@ export function ProductCards() {
             </div>
           </div>
 
-          {/* Card 3: Chase Auto */}
+          {/* Card 3: Crest Auto */}
           <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             <div className="bg-[#0060AF] text-white p-6 flex justify-between items-center h-24">
-              <h3 className="text-xl font-semibold">Chase Auto</h3>
+              <h3 className="text-xl font-semibold">Crest Auto</h3>
               <Car className="w-10 h-10 opacity-90" strokeWidth={1.5} />
             </div>
             <div className="p-6 flex flex-col flex-grow bg-white">
@@ -63,7 +63,7 @@ export function ProductCards() {
               </h4>
               <p className="text-gray-700 mb-8 flex-grow">
                 Shop live inventory and filter by price, model, features and
-                more. Then apply online in minutes for Chase Auto financing.
+                more. Then apply online in minutes for Crest Auto financing.
               </p>
               <button className="bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
                 Shop now
