@@ -61,7 +61,7 @@ export function LoanPage() {
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="bg-[#003A70] p-8 text-white">
-            <h2 className="text-2xl font-semibold mb-2">Chase Loans</h2>
+            <h2 className="text-2xl font-semibold mb-2">Crest Loans</h2>
             <p className="text-blue-100">
               Flexible financing options tailored to your needs with competitive
               rates.
@@ -149,7 +149,7 @@ export function LoanPage() {
 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 text-sm text-gray-600">
                   <p>
-                    By submitting this application, you authorize Chase to
+                    By submitting this application, you authorize Crest to
                     review your credit history and verify the information
                     provided.
                   </p>
