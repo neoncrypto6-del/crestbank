@@ -107,7 +107,7 @@ export function DashboardLayout({
             <a href="#/dashboard" className="flex items-center">
               <img
                 src="/chasebank.png"
-                alt="Chase"
+                alt="Crest"
                 className="h-6 object-contain brightness-0 invert" />
               
             </a>
