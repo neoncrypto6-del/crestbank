@@ -1,5 +1,6 @@
 import React from 'react';
 import { CreditCard, Car } from 'lucide-react';
+
 export function ProductCards() {
   return (
     <section className="w-full py-8 bg-white">
@@ -7,7 +8,7 @@ export function ProductCards() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card 1: Crest Credit Cards */}
           <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <div className="bg-[#0060AF] text-white p-6 flex justify-between items-center h-24">
+            <div className="bg-[#117A3E] text-white p-6 flex justify-between items-center h-24">
               <h3 className="text-xl font-semibold">Crest Credit Cards</h3>
               <CreditCard className="w-10 h-10 opacity-90" strokeWidth={1.5} />
             </div>
@@ -19,7 +20,7 @@ export function ProductCards() {
                 Learn which Crest Credit Cards you're preapproved for in just a
                 few moments. Plus, there's no impact to your credit score.
               </p>
-              <button className="bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
+              <button className="bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
                 Get started
               </button>
             </div>
@@ -34,7 +35,6 @@ export function ProductCards() {
               <CreditCard
                 className="w-10 h-10 opacity-90 flex-shrink-0"
                 strokeWidth={1.5} />
-              
             </div>
             <div className="p-6 flex flex-col flex-grow bg-white">
               <h4 className="text-2xl font-semibold text-gray-900 mb-4">
@@ -45,7 +45,7 @@ export function ProductCards() {
                 dining, 2x points on all other travel purchases, and more. Terms
                 apply.
               </p>
-              <button className="bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
+              <button className="bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
                 See details
               </button>
             </div>
@@ -53,7 +53,7 @@ export function ProductCards() {
 
           {/* Card 3: Crest Auto */}
           <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <div className="bg-[#0060AF] text-white p-6 flex justify-between items-center h-24">
+            <div className="bg-[#117A3E] text-white p-6 flex justify-between items-center h-24">
               <h3 className="text-xl font-semibold">Crest Auto</h3>
               <Car className="w-10 h-10 opacity-90" strokeWidth={1.5} />
             </div>
@@ -65,13 +65,13 @@ export function ProductCards() {
                 Shop live inventory and filter by price, model, features and
                 more. Then apply online in minutes for Crest Auto financing.
               </p>
-              <button className="bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
+              <button className="bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded w-full md:w-auto self-start transition-colors">
                 Shop now
               </button>
             </div>
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
