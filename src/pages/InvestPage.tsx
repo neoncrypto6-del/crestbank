@@ -137,12 +137,12 @@ export function InvestPage() {
           <div className="flex items-center mb-4">
             <TrendingUp className="w-8 h-8 mr-3 text-blue-300" />
             <h2 className="text-2xl font-semibold">
-              J.P. Morgan Self-Directed Investing
+              Crypto Self-Directed Investing
             </h2>
           </div>
           <p className="text-blue-100 max-w-2xl">
             Take control of your portfolio. Trade commission-free online and
-            access a wide range of digital assets directly from your Chase
+            access a wide range of digital assets directly from your Crest
             account.
           </p>
         </div>
