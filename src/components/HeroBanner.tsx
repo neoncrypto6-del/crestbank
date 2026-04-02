@@ -44,7 +44,7 @@ export function HeroBanner() {
               <span className="text-[3rem] md:text-[5rem] align-top relative top-[1rem] md:top-[2rem] mr-1">
                 $
               </span>
-              400
+              100
             </h1>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight">
