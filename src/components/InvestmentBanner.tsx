@@ -34,7 +34,7 @@ export function InvestmentBanner() {
             </h3>
             <p className="text-lg text-gray-700 mb-8">
               This is an invitation to get up to $1,000 when you open and fund a
-              J.P. Morgan Self-Directed Investing account—an investing
+              Crypto Self-Directed Investing account—an investing
               experience that puts you in control.
             </p>
             <button className="bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-8 rounded w-full md:w-auto self-start transition-colors">
