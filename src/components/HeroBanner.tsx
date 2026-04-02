@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../lib/auth';
+
 export function HeroBanner() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -8,17 +9,19 @@ export function HeroBanner() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      const { data, error } = await supabase.
-      from('users').
-      select('*').
-      eq('username', username).
-      eq('password', password).
-      single();
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password)
+        .single();
+
       if (error || !data) {
         setError('Invalid username or password');
       } else {
@@ -31,6 +34,7 @@ export function HeroBanner() {
       setLoading(false);
     }
   };
+
   return (
     <section className="w-full bg-gradient-to-r from-[#003A70] to-[#0060AF] text-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between">
@@ -57,7 +61,6 @@ export function HeroBanner() {
           <a
             href="#/enroll"
             className="bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded transition-colors duration-200">
-            
             Open an account
           </a>
         </div>
@@ -75,9 +78,9 @@ export function HeroBanner() {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-[#0060AF] transition-colors"
-                required />
-              
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-[#117A3E] transition-colors"
+                required
+              />
             </div>
 
             <div className="mb-6 relative">
@@ -86,14 +89,14 @@ export function HeroBanner() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-[#0060AF] transition-colors pr-12"
-                required />
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-[#117A3E] transition-colors pr-12"
+                required
+              />
               
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-0 top-2 text-[#0060AF] font-semibold text-sm hover:underline">
-                
+                className="absolute right-0 top-2 text-[#117A3E] font-semibold text-sm hover:underline">
                 {showPassword ? 'Hide' : 'Show'}
               </button>
             </div>
@@ -102,14 +105,13 @@ export function HeroBanner() {
               <label className="flex items-center text-gray-600 text-sm cursor-pointer">
                 <input
                   type="checkbox"
-                  className="mr-2 w-4 h-4 rounded border-gray-300 text-[#0060AF] focus:ring-[#0060AF]" />
-                
+                  className="mr-2 w-4 h-4 rounded border-gray-300 text-[#117A3E] focus:ring-[#117A3E]" 
+                />
                 Remember me
               </label>
               <a
                 href="#"
-                className="text-[#0060AF] text-sm hover:underline flex items-center">
-                
+                className="text-[#117A3E] text-sm hover:underline flex items-center">
                 Use token <span className="ml-1">›</span>
               </a>
             </div>
@@ -117,28 +119,25 @@ export function HeroBanner() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 rounded mb-4 transition-colors disabled:opacity-70">
-              
+              className="w-full bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 rounded mb-4 transition-colors disabled:opacity-70">
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
 
             <div className="flex flex-col space-y-2 text-sm">
               <a
                 href="#"
-                className="text-[#0060AF] hover:underline flex items-center">
-                
+                className="text-[#117A3E] hover:underline flex items-center">
                 Forgot username/password? <span className="ml-1">›</span>
               </a>
               <a
                 href="#/enroll"
-                className="text-[#0060AF] hover:underline flex items-center">
-                
+                className="text-[#117A3E] hover:underline flex items-center">
                 Not Enrolled? Sign Up Now. <span className="ml-1">›</span>
               </a>
             </div>
           </form>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
