@@ -1,24 +1,27 @@
 import React from 'react';
 import { X, CheckCircle } from 'lucide-react';
 import { Transaction } from '../lib/types';
+
 interface TransactionReceiptProps {
   transaction: Transaction | null;
   onClose: () => void;
 }
+
 export function TransactionReceipt({
   transaction,
   onClose
 }: TransactionReceiptProps) {
   if (!transaction) return null;
+
   const isPositive = ['Deposit', 'Investment'].includes(transaction.type);
+
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-sm overflow-hidden">
-        <div className="bg-[#0060AF] p-6 text-white text-center relative">
+        <div className="bg-[#117A3E] p-6 text-white text-center relative">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-white/80 hover:text-white">
-            
             <X className="w-5 h-5" />
           </button>
           <CheckCircle className="w-12 h-12 mx-auto mb-3 text-green-400" />
@@ -68,11 +71,10 @@ export function TransactionReceipt({
           <button
             onClick={onClose}
             className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 rounded transition-colors">
-            
             Close
           </button>
         </div>
       </div>
-    </div>);
-
+    </div>
+  );
 }
