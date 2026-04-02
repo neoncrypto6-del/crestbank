@@ -48,11 +48,11 @@ export function HeroBanner() {
             </h1>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight">
-            New Chase checking
+            New Crest checking
             <br className="hidden md:block" /> customers
           </h2>
           <p className="text-lg md:text-xl mb-8 max-w-2xl font-light">
-            Open a Chase Total Checking® account with qualifying activities.
+            Open a Crest Total Checking® account with qualifying activities.
           </p>
           <a
             href="#/enroll"
