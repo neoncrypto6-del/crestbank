@@ -43,7 +43,7 @@ export function CardsPage() {
               <div className="flex justify-between items-start">
                 <img
                   src="/chasebank.png"
-                  alt="Chase"
+                  alt="Crest"
                   className="h-6 brightness-0 invert" />
                 
                 <div className="w-8 h-8 border-2 border-white/40 rounded-full flex items-center justify-center">
