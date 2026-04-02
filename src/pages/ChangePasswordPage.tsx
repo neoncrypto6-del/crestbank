@@ -3,6 +3,7 @@ import { DashboardLayout } from '../components/DashboardLayout';
 import { useAuth } from '../lib/auth';
 import { supabase } from '../lib/supabase';
 import { Key } from 'lucide-react';
+
 export function ChangePasswordPage() {
   const { user } = useAuth();
   const [oldPassword, setOldPassword] = useState('');
@@ -11,10 +12,12 @@ export function ChangePasswordPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess(false);
+
     if (newPassword !== confirmPassword) {
       setError('New passwords do not match');
       return;
@@ -23,27 +26,31 @@ export function ChangePasswordPage() {
       setError('Password must be at least 6 characters long');
       return;
     }
+
     setLoading(true);
     try {
       if (!user) throw new Error('Not authenticated');
+
       // Verify old password
-      const { data: verifyData, error: verifyError } = await supabase.
-      from('users').
-      select('id').
-      eq('id', user.id).
-      eq('password', oldPassword).
-      single();
+      const { data: verifyData, error: verifyError } = await supabase
+        .from('users')
+        .select('id')
+        .eq('id', user.id)
+        .eq('password', oldPassword)
+        .single();
+
       if (verifyError || !verifyData) {
         throw new Error('Incorrect current password');
       }
+
       // Update password
-      const { error: updateError } = await supabase.
-      from('users').
-      update({
-        password: newPassword
-      }).
-      eq('id', user.id);
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ password: newPassword })
+        .eq('id', user.id);
+
       if (updateError) throw updateError;
+
       setSuccess(true);
       setOldPassword('');
       setNewPassword('');
@@ -54,13 +61,14 @@ export function ChangePasswordPage() {
       setLoading(false);
     }
   };
+
   return (
     <DashboardLayout title="Change Password" showBack>
       <div className="max-w-md mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
           <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center">
-              <Key className="w-8 h-8 text-[#0060AF]" />
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center">
+              <Key className="w-8 h-8 text-[#117A3E]" />
             </div>
           </div>
 
@@ -68,16 +76,16 @@ export function ChangePasswordPage() {
             Update Security Credentials
           </h2>
 
-          {error &&
-          <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg text-sm">
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg text-sm">
               {error}
             </div>
-          }
-          {success &&
-          <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg text-sm">
+          )}
+          {success && (
+            <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg text-sm">
               Password updated successfully!
             </div>
-          }
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -89,8 +97,7 @@ export function ChangePasswordPage() {
                 required
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none" />
-              
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none" />
             </div>
 
             <div>
@@ -102,8 +109,7 @@ export function ChangePasswordPage() {
                 required
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none" />
-              
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none" />
             </div>
 
             <div>
@@ -115,20 +121,18 @@ export function ChangePasswordPage() {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none" />
-              
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none" />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-70 mt-2">
-              
+              className="w-full bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-70 mt-2">
               {loading ? 'Updating...' : 'Update Password'}
             </button>
           </form>
         </div>
       </div>
-    </DashboardLayout>);
-
+    </DashboardLayout>
+  );
 }
