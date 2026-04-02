@@ -32,7 +32,7 @@ export function Header() {
     link: '#/feature/auto'
   },
   {
-    name: 'Investing by J.P. Morgan',
+    name: 'Investing by Crypto',
     link: '#/feature/investing'
   },
   {
@@ -109,7 +109,7 @@ export function Header() {
             <a href="#/" className="flex items-center">
               <img
                 src="/chasebank.png"
-                alt="Chase"
+                alt="Crest"
                 className="h-6 md:h-8 object-contain" />
               
             </a>
@@ -133,7 +133,7 @@ export function Header() {
               Auto
             </a>
             <a href="#/feature/investing" className="hover:text-[#0060AF]">
-              Investing by J.P. Morgan
+              Investing by crypto
             </a>
             <a href="#/feature/education" className="hover:text-[#0060AF]">
               Education & goals
@@ -169,7 +169,7 @@ export function Header() {
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
               <img
               src="/chasebank.png"
-              alt="Chase"
+              alt="Crest"
               className="h-6 object-contain" />
             
               <button
