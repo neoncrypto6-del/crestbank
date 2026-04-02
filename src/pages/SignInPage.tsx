@@ -45,7 +45,7 @@ export function SignInPage() {
         <a href="#/">
           <img
             src="/chasebank.png"
-            alt="Chase"
+            alt="Crest"
             className="h-8 object-contain brightness-0 invert" />
           
         </a>
@@ -170,13 +170,13 @@ export function SignInPage() {
               Fair Lending
             </a>
             <a href="#" className="hover:underline">
-              About Chase
+              About Crest
             </a>
             <a href="#" className="hover:underline">
-              J.P. Morgan
+              Anthony
             </a>
             <a href="#" className="hover:underline">
-              JPMorgan Chase & Co.
+              Crest & Co.
             </a>
             <a href="#" className="hover:underline">
               Careers
@@ -185,7 +185,7 @@ export function SignInPage() {
               Español
             </a>
             <a href="#" className="hover:underline">
-              Chase Canada
+              Crest United Kingdom
             </a>
             <a href="#" className="hover:underline">
               Site map
@@ -195,7 +195,7 @@ export function SignInPage() {
             </a>
             <span className="flex items-center">Equal Housing Opportunity</span>
           </div>
-          <div className="text-xs text-gray-500">© 2026 JPMorganChase</div>
+          <div className="text-xs text-gray-500">© 2010 Crest</div>
         </div>
       </footer>
     </div>);
