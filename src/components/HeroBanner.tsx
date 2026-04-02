@@ -36,7 +36,7 @@ export function HeroBanner() {
   };
 
   return (
-    <section className="w-full bg-gradient-to-r from-[#003A70] to-[#0060AF] text-white relative">
+    <section className="w-full bg-gradient-to-r from-[#097529] to-[#00AF34] text-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 flex flex-col md:flex-row items-center justify-between">
         {/* Left Side: Offer Amount & Details */}
         <div className="w-full md:w-1/2 flex flex-col items-start mb-8 md:mb-0">
