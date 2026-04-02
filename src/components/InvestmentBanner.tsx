@@ -1,4 +1,5 @@
 import React from 'react';
+
 export function InvestmentBanner() {
   return (
     <section className="w-full py-12 bg-white">
@@ -43,6 +44,6 @@ export function InvestmentBanner() {
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
