@@ -6,8 +6,8 @@ import {
   Youtube,
   Linkedin,
   PinIcon,
-  HomeIcon } from
-'lucide-react';
+  HomeIcon } from 'lucide-react';
+
 export function Footer() {
   return (
     <footer className="w-full bg-[#F5F5F5] pt-16 pb-8 border-t border-gray-200">
@@ -19,7 +19,6 @@ export function Footer() {
               src="/chasebank.png"
               alt="Crest"
               className="h-8 object-contain" />
-            
           </a>
         </div>
 
@@ -31,15 +30,13 @@ export function Footer() {
               Choose the{' '}
               <a
                 href="#/feature/checking"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 checking account
               </a>{' '}
               that works best for you. See our{' '}
               <a
                 href="#/feature/checking"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest Total Checking®
               </a>{' '}
               offer for new customers. Make purchases with your debit card, and
@@ -55,15 +52,13 @@ export function Footer() {
               It's never too early to begin saving.{' '}
               <a
                 href="#/feature/savings"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Open a savings account
               </a>{' '}
               or open a Certificate of Deposit (
               <a
                 href="#/feature/savings"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 see interest rates
               </a>
               ) and start saving your money.
@@ -75,37 +70,32 @@ export function Footer() {
               Crest{' '}
               <a
                 href="#/feature/credit-cards"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 credit cards
               </a>{' '}
               can help you buy the things you need. Many of our cards{' '}
               <a
                 href="#/feature/credit-cards"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 offer rewards
               </a>{' '}
               that can be redeemed for{' '}
               <a
                 href="#/feature/credit-cards"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 cash back
               </a>{' '}
               or{' '}
               <a
                 href="#/feature/credit-cards"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 travel-related
               </a>{' '}
               perks. With so many options, it can be easy to find a card that
               matches your lifestyle. Plus, with Credit Journey you can get a{' '}
               <a
                 href="#/feature/credit-score"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 free credit score
               </a>
               !
@@ -117,36 +107,31 @@ export function Footer() {
               Apply for a{' '}
               <a
                 href="#/feature/home-loans"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 mortgage
               </a>{' '}
               or{' '}
               <a
                 href="#/feature/home-loans"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 refinance your mortgage
               </a>{' '}
               with Crest. View today's{' '}
               <a
                 href="#/feature/home-loans"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 mortgage rates
               </a>{' '}
               or calculate what you can afford with our{' '}
               <a
                 href="#/feature/home-loans"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 mortgage calculator
               </a>
               . Visit our{' '}
               <a
                 href="#/feature/home-loans"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Education Center
               </a>{' '}
               for homebuying tips and more.
@@ -163,29 +148,25 @@ export function Footer() {
             <p>
               <a
                 href="#/feature/auto"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest Auto
               </a>{' '}
               is here to help you get the right car. Apply for{' '}
               <a
                 href="#/feature/auto"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 auto financing
               </a>{' '}
               for a new or used car with Crest. Use the{' '}
               <a
                 href="#/feature/auto"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 payment calculator
               </a>{' '}
               to estimate monthly payments. Check out the{' '}
               <a
                 href="#/feature/auto"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest Auto Education Center
               </a>{' '}
               to get car guidance from a trusted source.
@@ -200,36 +181,31 @@ export function Footer() {
               from{' '}
               <a
                 href="#/feature/business"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 business checking
               </a>
               ,{' '}
               <a
                 href="#/feature/business"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 small business loans
               </a>
               ,{' '}
               <a
                 href="#/feature/business"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 business credit cards
               </a>
               ,{' '}
               <a
                 href="#/feature/business"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 merchant services
               </a>{' '}
               or visit our{' '}
               <a
                 href="#/feature/business"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 business resource center
               </a>
               .
@@ -244,29 +220,25 @@ export function Footer() {
               culinary events through{' '}
               <a
                 href="#/feature/entertainment"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest Experiences
               </a>{' '}
               and our exclusive partnerships such as the{' '}
               <a
                 href="#/feature/entertainment"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 US Open
               </a>
               ,{' '}
               <a
                 href="#/feature/entertainment"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Madison Square Garden
               </a>{' '}
               and{' '}
               <a
                 href="#/feature/entertainment"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest Center
               </a>
               .
@@ -280,37 +252,32 @@ export function Footer() {
               Our{' '}
               <a
                 href="#/feature/security"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 suite of security features
               </a>{' '}
               can{' '}
               <a
                 href="#/feature/security"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 help you protect
               </a>{' '}
               your info, money and give you peace of mind. See how we're
               dedicated to helping{' '}
               <a
                 href="#/feature/security"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 protect you
               </a>
               , your accounts and your loved ones from{' '}
               <a
                 href="#/feature/security"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 financial abuse
               </a>
               . Also,{' '}
               <a
                 href="#/feature/security"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 learn about the common tricks scammers are using
               </a>{' '}
               to help you stay one step ahead of them. If you see unauthorized
@@ -318,8 +285,7 @@ export function Footer() {
               away to{' '}
               <a
                 href="#/feature/security"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 report fraud
               </a>
               .
@@ -337,8 +303,7 @@ export function Footer() {
               Crest serves millions of people with a broad range of products.{' '}
               <a
                 href="#/feature/about"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest online
               </a>{' '}
               lets you manage your Crest accounts, view statements, monitor
@@ -346,29 +311,25 @@ export function Footer() {
               place. To learn more, visit the{' '}
               <a
                 href="#/feature/about"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Banking Education Center
               </a>
               . For questions or concerns, please contact{' '}
               <a
                 href="#/feature/about"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest customer service
               </a>{' '}
               or let us know about{' '}
               <a
                 href="#/feature/about"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest complaints and feedback
               </a>
               . View the{' '}
               <a
                 href="#/feature/about"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest Community Reinvestment Act Public File
               </a>{' '}
               for the bank's latest CRA rating and other CRA-related
@@ -383,43 +344,37 @@ export function Footer() {
               Partner with a global leader who puts your financial needs first.{' '}
               <a
                 href="#/feature/investing"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Invest on your own
               </a>{' '}
               or{' '}
               <a
                 href="#/feature/investing"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 work with an advisor
               </a>{' '}
               — we have the{' '}
               <a
                 href="#/feature/investing"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 products, technology
               </a>{' '}
               and{' '}
               <a
                 href="#/feature/investing"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 investment education
               </a>
               , to help you grow your wealth. Visit a J.P. Morgan{' '}
               <a
                 href="#/feature/investing"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Wealth Management Branch
               </a>{' '}
               or check out our latest online investing{' '}
               <a
                 href="#/feature/investing"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 features, offers, promotions, and coupons
               </a>
               .
@@ -448,29 +403,25 @@ export function Footer() {
               Get more from a personalized relationship offering{' '}
               <a
                 href="#/feature/private-client"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 no everyday banking fees
               </a>
               , priority service from a{' '}
               <a
                 href="#/feature/private-client"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 dedicated team
               </a>{' '}
               and{' '}
               <a
                 href="#/feature/private-client"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 special perks and benefits
               </a>
               . Connect with a Chase Private Client Banker at your nearest{' '}
               <a
                 href="#/feature/private-client"
-                className="text-[#0060AF] hover:underline">
-                
+                className="text-[#117A3E] hover:underline">
                 Crest branch
               </a>{' '}
               to learn about eligibility requirements and all available
@@ -497,32 +448,27 @@ export function Footer() {
             <span className="text-gray-900">Other Products & Services:</span>
             <a
               href="#/feature/agreements"
-              className="text-[#0060AF] hover:underline">
-              
+              className="text-[#117A3E] hover:underline">
               Deposit Account Agreements
             </a>
             <a
               href="#/feature/mobile"
-              className="text-[#0060AF] hover:underline">
-              
+              className="text-[#117A3E] hover:underline">
               Mobile Banking
             </a>
             <a
               href="#/feature/online"
-              className="text-[#0060AF] hover:underline">
-              
+              className="text-[#117A3E] hover:underline">
               Online Banking
             </a>
             <a
               href="#/feature/student"
-              className="text-[#0060AF] hover:underline">
-              
+              className="text-[#117A3E] hover:underline">
               Student Center
             </a>
             <a
               href="#/feature/zelle"
-              className="text-[#0060AF] hover:underline">
-              
+              className="text-[#117A3E] hover:underline">
               Zelle®
             </a>
           </div>
@@ -609,6 +555,6 @@ export function Footer() {
           © 2026 JPMorgan Chase & Co.
         </div>
       </div>
-    </footer>);
-
+    </footer>
+  );
 }
