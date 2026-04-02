@@ -36,7 +36,7 @@ export function FeaturePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div>
                 <h2 className="text-3xl font-semibold text-gray-900 mb-6">
-                  Why choose Chase for {featureName.toLowerCase()}?
+                  Why choose Crest for {featureName.toLowerCase()}?
                 </h2>
                 <div className="space-y-6 text-lg text-gray-700">
                   <p>
@@ -58,7 +58,7 @@ export function FeaturePage() {
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1 mr-3">
                         <div className="w-2 h-2 bg-[#0060AF] rounded-full"></div>
                       </div>
-                      <span>24/7 access via the Chase Mobile® app</span>
+                      <span>24/7 access via the Crest Mobile® app</span>
                     </li>
                     <li className="flex items-start">
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-1 mr-3">
@@ -84,7 +84,7 @@ export function FeaturePage() {
                   <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mx-auto mb-6">
                     <img
                       src="/chasebank.png"
-                      alt="Chase"
+                      alt="Crest"
                       className="h-8 object-contain" />
                     
                   </div>
