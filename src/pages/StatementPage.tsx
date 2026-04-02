@@ -48,7 +48,7 @@ export function StatementPage() {
           <div className="flex justify-between items-start">
             <img
               src="/chasebank.png"
-              alt="Chase"
+              alt="Crest"
               className="h-8" />
             
             <div className="text-right">
