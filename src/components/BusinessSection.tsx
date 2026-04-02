@@ -1,4 +1,5 @@
 import React from 'react';
+
 export function BusinessSection() {
   return (
     <section className="w-full py-12 bg-white">
@@ -16,7 +17,6 @@ export function BusinessSection() {
             <a
               href="#/enroll"
               className="bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-8 rounded w-full md:w-auto text-center transition-colors">
-              
               Open account
             </a>
           </div>
@@ -26,11 +26,11 @@ export function BusinessSection() {
             <img
               src="/Earn_up_to_500.png"
               alt="Earn up to $500"
-              className="w-full max-w-md object-contain shadow-lg rounded-lg" />
-            
+              className="w-full max-w-md object-contain shadow-lg rounded-lg" 
+            />
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }
