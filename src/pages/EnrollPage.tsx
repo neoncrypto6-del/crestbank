@@ -59,7 +59,7 @@ export function EnrollPage() {
         <a href="#/">
           <img
             src="/chasebank.png"
-            alt="Chase"
+            alt="Crest"
             className="h-8 object-contain" />
           
         </a>
