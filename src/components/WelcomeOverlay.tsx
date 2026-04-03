@@ -7,12 +7,13 @@ export function WelcomeOverlay() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
-    const hasSeenWelcome = sessionStorage.getItem(`welcome_shown_${user.id}`);
-    if (!hasSeenWelcome) {
-      setIsOpen(true);
-      sessionStorage.setItem(`welcome_shown_${user.id}`, 'true');
+    if (!user) {
+      setIsOpen(false);
+      return;
     }
+
+    // Always show welcome overlay on every login
+    setIsOpen(true);
   }, [user]);
 
   if (!isOpen || !user) return null;
