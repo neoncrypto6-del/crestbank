@@ -7,12 +7,12 @@ import { Users, CheckCircle, Clock, Trash2, Upload } from 'lucide-react';
 const RELATIONSHIPS = ['Parent', 'Spouse', 'Sibling', 'Child', 'Other'];
 
 const DOCUMENT_TYPES = [
-{ key: 'id_front', label: 'ID Card Front', accept: 'image/*,.pdf' },
-{ key: 'id_back', label: 'ID Card Back', accept: 'image/*,.pdf' },
-{ key: 'ssn_card', label: 'SSN Card', accept: 'image/*,.pdf' },
-{ key: 'w2', label: 'W-2 Form', accept: '.pdf,image/*' },
-{ key: 'proof_address', label: 'Proof of Address', accept: '.pdf,image/*' }] as
-const;
+  { key: 'id_front', label: 'ID Card Front', accept: 'image/*,.pdf' },
+  { key: 'id_back', label: 'ID Card Back', accept: 'image/*,.pdf' },
+  { key: 'ssn_card', label: 'SSN Card', accept: 'image/*,.pdf' },
+  { key: 'w2', label: 'W-2 Form', accept: '.pdf,image/*' },
+  { key: 'proof_address', label: 'Proof of Address', accept: '.pdf,image/*' }
+] as const;
 
 type DocumentKey = (typeof DOCUMENT_TYPES)[number]['key'];
 type FileState = Partial<Record<DocumentKey, File | null>>;
@@ -47,11 +47,11 @@ export function NextOfKinPage() {
 
   const fetchNextOfKin = async () => {
     try {
-      const { data, error } = await supabase.
-      from('next_of_kin').
-      select('*').
-      eq('user_id', user?.id).
-      single();
+      const { data, error } = await supabase
+        .from('next_of_kin')
+        .select('*')
+        .eq('user_id', user?.id)
+        .single();
 
       if (data) {
         setNokId(data.id);
@@ -68,15 +68,15 @@ export function NextOfKinPage() {
         });
       }
     } catch (err) {
-
       // No record found → fine
-    } finally {setFetching(false);
+    } finally {
+      setFetching(false);
     }
   };
 
   const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-  {
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -108,18 +108,18 @@ export function NextOfKinPage() {
 
     setUploadProgress((prev) => ({ ...prev, [key]: 'Uploading...' }));
 
-    const { error: uploadError } = await supabase.storage.
-    from('uploads') // ← Changed to your actual bucket name
-    .upload(filePath, file, {
-      upsert: true,
-      contentType: file.type
-    });
+    const { error: uploadError } = await supabase.storage
+      .from('uploads')
+      .upload(filePath, file, {
+        upsert: true,
+        contentType: file.type
+      });
 
     if (uploadError) throw uploadError;
 
-    const { data: urlData } = supabase.storage.
-    from('uploads') // ← Changed here too
-    .getPublicUrl(filePath);
+    const { data: urlData } = supabase.storage
+      .from('uploads')
+      .getPublicUrl(filePath);
 
     setUploadProgress((prev) => ({ ...prev, [key]: 'Uploaded' }));
 
@@ -151,18 +151,18 @@ export function NextOfKinPage() {
       let currentNokId = nokId;
 
       if (nokId) {
-        result = await supabase.
-        from('next_of_kin').
-        update(payload).
-        eq('id', nokId).
-        select().
-        single();
+        result = await supabase
+          .from('next_of_kin')
+          .update(payload)
+          .eq('id', nokId)
+          .select()
+          .single();
       } else {
-        result = await supabase.
-        from('next_of_kin').
-        insert([payload]).
-        select().
-        single();
+        result = await supabase
+          .from('next_of_kin')
+          .insert([payload])
+          .select()
+          .single();
 
         if (result.data) {
           currentNokId = result.data.id;
@@ -191,10 +191,10 @@ export function NextOfKinPage() {
         if (successfulUploads.length > 0) {
           const documents = Object.assign({}, ...successfulUploads);
 
-          const { error: docError } = await supabase.
-          from('next_of_kin').
-          update({ documents }).
-          eq('id', currentNokId);
+          const { error: docError } = await supabase
+            .from('next_of_kin')
+            .update({ documents })
+            .eq('id', currentNokId);
 
           if (docError) throw docError;
         }
@@ -215,8 +215,8 @@ export function NextOfKinPage() {
     return (
       <DashboardLayout title="Next of Kin" showBack>
         <div className="p-12 text-center">Loading...</div>
-      </DashboardLayout>);
-
+      </DashboardLayout>
+    );
   }
 
   return (
@@ -225,36 +225,34 @@ export function NextOfKinPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
           <div
             className={`p-6 flex items-center ${
-            status === 'Verified' ?
-            'bg-green-50' :
-            status === 'Not Submitted' ?
-            'bg-gray-50' :
-            'bg-yellow-50'}`
-            }>
-            
-            {status === 'Verified' ?
-            <CheckCircle className="w-8 h-8 text-green-500 mr-4" /> :
-            status === 'Not Submitted' ?
-            <Users className="w-8 h-8 text-gray-400 mr-4" /> :
-
-            <Clock className="w-8 h-8 text-yellow-500 mr-4" />
-            }
+              status === 'Verified'
+                ? 'bg-green-50'
+                : status === 'Not Submitted'
+                ? 'bg-gray-50'
+                : 'bg-yellow-50'
+            }`}>
+            {status === 'Verified' ? (
+              <CheckCircle className="w-8 h-8 text-green-500 mr-4" />
+            ) : status === 'Not Submitted' ? (
+              <Users className="w-8 h-8 text-gray-400 mr-4" />
+            ) : (
+              <Clock className="w-8 h-8 text-yellow-500 mr-4" />
+            )}
             <div>
               <h2 className="text-lg font-semibold text-gray-900">Status: {status}</h2>
               <p
                 className={`text-sm ${
-                status === 'Verified' ?
-                'text-green-700' :
-                status === 'Not Submitted' ?
-                'text-gray-500' :
-                'text-yellow-700'}`
-                }>
-                
-                {status === 'Verified' ?
-                'Beneficiary details verified.' :
-                status === 'Not Submitted' ?
-                'Please provide your beneficiary details below.' :
-                'Details submitted and pending review.'}
+                  status === 'Verified'
+                    ? 'text-green-700'
+                    : status === 'Not Submitted'
+                    ? 'text-gray-500'
+                    : 'text-yellow-700'
+                }`}>
+                {status === 'Verified'
+                  ? 'Beneficiary details verified.'
+                  : status === 'Not Submitted'
+                  ? 'Please provide your beneficiary details below.'
+                  : 'Details submitted and pending review.'}
               </p>
             </div>
           </div>
@@ -265,16 +263,16 @@ export function NextOfKinPage() {
             Beneficiary Information
           </h3>
 
-          {error &&
-          <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg text-sm">
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg text-sm">
               {error}
             </div>
-          }
-          {success &&
-          <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg text-sm">
+          )}
+          {success && (
+            <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg text-sm">
               Details saved successfully!
             </div>
-          }
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -288,8 +286,7 @@ export function NextOfKinPage() {
                   required
                   value={formData.full_name}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none" />
-                
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none" />
               </div>
 
               <div>
@@ -301,13 +298,12 @@ export function NextOfKinPage() {
                   value={formData.relationship}
                   onChange={handleChange}
                   required
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none">
-                  
-                  {RELATIONSHIPS.map((opt) =>
-                  <option key={opt} value={opt}>
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none">
+                  {RELATIONSHIPS.map((opt) => (
+                    <option key={opt} value={opt}>
                       {opt}
                     </option>
-                  )}
+                  ))}
                 </select>
               </div>
 
@@ -321,8 +317,7 @@ export function NextOfKinPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none" />
-                
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none" />
               </div>
 
               <div>
@@ -335,8 +330,7 @@ export function NextOfKinPage() {
                   required
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none" />
-                
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none" />
               </div>
 
               <div>
@@ -349,9 +343,8 @@ export function NextOfKinPage() {
                   required
                   value={formData.date_of_birth}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none"
                   max={new Date().toISOString().split('T')[0]} />
-                
               </div>
 
               <div>
@@ -364,9 +357,8 @@ export function NextOfKinPage() {
                   required
                   value={formData.ssn}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none"
                   placeholder="XXX-XX-XXXX" />
-                
               </div>
 
               <div className="md:col-span-2">
@@ -379,8 +371,7 @@ export function NextOfKinPage() {
                   required
                   value={formData.address}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] outline-none" />
-                
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] outline-none" />
               </div>
             </div>
 
@@ -391,65 +382,57 @@ export function NextOfKinPage() {
               </h4>
 
               <div className="space-y-4">
-                {DOCUMENT_TYPES.map(({ key, label, accept }) =>
-                <div key={key} className="border border-gray-200 rounded-lg p-4">
+                {DOCUMENT_TYPES.map(({ key, label, accept }) => (
+                  <div key={key} className="border border-gray-200 rounded-lg p-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       {label}
                     </label>
 
-                    {files[key] ?
-                  <div className="flex items-center justify-between bg-gray-50 p-3 rounded">
+                    {files[key] ? (
+                      <div className="flex items-center justify-between bg-gray-50 p-3 rounded">
                         <div className="flex items-center">
-                          <Upload className="w-5 h-5 text-blue-600 mr-2" />
+                          <Upload className="w-5 h-5 text-green-600 mr-2" />
                           <span className="text-sm text-gray-800 truncate max-w-xs">
                             {files[key]!.name}
                           </span>
                         </div>
                         <button
-                      type="button"
-                      onClick={() => removeFile(key)}
-                      className="text-red-600 hover:text-red-800">
-                      
+                          type="button"
+                          onClick={() => removeFile(key)}
+                          className="text-red-600 hover:text-red-800">
                           <Trash2 className="w-5 h-5" />
                         </button>
-                      </div> :
-
-                  <input
-                    type="file"
-                    accept={accept}
-                    onChange={handleFileChange(key)}
-                    className="block w-full text-sm text-gray-500
+                      </div>
+                    ) : (
+                      <input
+                        type="file"
+                        accept={accept}
+                        onChange={handleFileChange(key)}
+                        className="block w-full text-sm text-gray-500
                           file:mr-4 file:py-2 file:px-4
                           file:rounded-lg file:border-0
                           file:text-sm file:font-semibold
-                          file:bg-blue-50 file:text-blue-700
-                          hover:file:bg-blue-100" />
+                          file:bg-green-50 file:text-green-700
+                          hover:file:bg-green-100" />
+                    )}
 
-
-
-
-
-
-                  }
-
-                    {uploadProgress[key] &&
-                  <p className="mt-1 text-xs text-blue-600">{uploadProgress[key]}</p>
-                  }
+                    {uploadProgress[key] && (
+                      <p className="mt-1 text-xs text-green-600">{uploadProgress[key]}</p>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-70 mt-8">
-              
+              className="w-full bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-70 mt-8">
               {loading ? 'Saving...' : 'Save & Submit for Review'}
             </button>
           </form>
         </div>
       </div>
-    </DashboardLayout>);
-
+    </DashboardLayout>
+  );
 }
