@@ -8,7 +8,7 @@ export function BusinessSection() {
           {/* Left Side: Text Content */}
           <div className="w-full md:w-1/2 flex flex-col items-start">
             <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-6 leading-tight">
-              Keep your business moving forward with Chase
+              Keep your business moving forward with Crest
             </h2>
             <p className="text-lg text-gray-700 mb-8">
               Open a new Crest Business Complete Checking® account with
