@@ -4,6 +4,7 @@ import { useAuth } from '../lib/auth';
 import { supabase } from '../lib/supabase';
 import { Transaction } from '../lib/types';
 import { FileText, Download, Search } from 'lucide-react';
+
 export function StatementPage() {
   const { user } = useAuth();
   const [fromDate, setFromDate] = useState('');
@@ -11,6 +12,7 @@ export function StatementPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user || !fromDate || !toDate) return;
@@ -20,15 +22,15 @@ export function StatementPage() {
       // Add 1 day to toDate to include the whole day
       const end = new Date(toDate);
       end.setDate(end.getDate() + 1);
-      const { data, error } = await supabase.
-      from('transactions').
-      select('*').
-      eq('user_id', user.id).
-      gte('created_at', new Date(fromDate).toISOString()).
-      lt('created_at', end.toISOString()).
-      order('created_at', {
-        ascending: false
-      });
+
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('created_at', new Date(fromDate).toISOString())
+        .lt('created_at', end.toISOString())
+        .order('created_at', { ascending: false });
+
       if (error) throw error;
       setTransactions(data || []);
     } catch (err) {
@@ -37,22 +39,23 @@ export function StatementPage() {
       setLoading(false);
     }
   };
+
   const handleDownload = () => {
     window.print();
   };
+
   return (
     <DashboardLayout title="Account Statement" showBack>
       <div className="max-w-5xl mx-auto">
         {/* Print-only header */}
-        <div className="hidden print:block mb-8 border-b-2 border-[#0060AF] pb-6">
+        <div className="hidden print:block mb-8 border-b-2 border-[#117A3E] pb-6">
           <div className="flex justify-between items-start">
             <img
               src="/chasebank.png"
               alt="Crest"
               className="h-8" />
-            
             <div className="text-right">
-              <h1 className="text-2xl font-bold text-[#0060AF]">
+              <h1 className="text-2xl font-bold text-[#117A3E]">
                 Account Statement
               </h1>
               <p className="text-gray-600">
@@ -80,7 +83,6 @@ export function StatementPage() {
           <form
             onSubmit={handleGenerate}
             className="flex flex-col md:flex-row gap-4 items-end">
-            
             <div className="flex-1 w-full">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 From Date
@@ -90,8 +92,7 @@ export function StatementPage() {
                 value={fromDate}
                 onChange={(e) => setFromDate(e.target.value)}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] focus:border-transparent outline-none" />
-              
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] focus:border-transparent outline-none" />
             </div>
             <div className="flex-1 w-full">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -102,49 +103,46 @@ export function StatementPage() {
                 value={toDate}
                 onChange={(e) => setToDate(e.target.value)}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] focus:border-transparent outline-none" />
-              
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] focus:border-transparent outline-none" />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full md:w-auto bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center disabled:opacity-70 h-[50px]">
-              
-              {loading ?
-              'Loading...' :
-
-              <>
+              className="w-full md:w-auto bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center disabled:opacity-70 h-[50px]">
+              {loading ? (
+                'Loading...'
+              ) : (
+                <>
                   <Search className="w-5 h-5 mr-2" /> Generate
                 </>
-              }
+              )}
             </button>
           </form>
         </div>
 
         {/* Results */}
-        {hasSearched &&
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none">
+        {hasSearched && (
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none">
             <div className="p-6 border-b border-gray-200 flex justify-between items-center print:hidden">
               <h3 className="text-lg font-semibold text-gray-900">
                 Statement Results
               </h3>
-              {transactions.length > 0 &&
-            <button
-              onClick={handleDownload}
-              className="text-[#0060AF] hover:text-blue-800 font-medium flex items-center">
-              
+              {transactions.length > 0 && (
+                <button
+                  onClick={handleDownload}
+                  className="text-[#117A3E] hover:text-[#0e6332] font-medium flex items-center">
                   <Download className="w-5 h-5 mr-1" /> Download PDF
                 </button>
-            }
+              )}
             </div>
 
-            {transactions.length === 0 ?
-          <div className="p-12 text-center text-gray-500">
+            {transactions.length === 0 ? (
+              <div className="p-12 text-center text-gray-500">
                 <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
                 <p>No transactions found for the selected period.</p>
-              </div> :
-
-          <div className="overflow-x-auto">
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-gray-50 text-gray-600 text-sm uppercase tracking-wider">
@@ -163,11 +161,10 @@ export function StatementPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {transactions.map((tx) =>
-                <tr
-                  key={tx.id}
-                  className="hover:bg-gray-50 print:hover:bg-transparent">
-                  
+                    {transactions.map((tx) => (
+                      <tr
+                        key={tx.id}
+                        className="hover:bg-gray-50 print:hover:bg-transparent">
                         <td className="p-4 text-sm text-gray-900 whitespace-nowrap">
                           {new Date(tx.created_at).toLocaleDateString()}
                         </td>
@@ -176,20 +173,19 @@ export function StatementPage() {
                         </td>
                         <td className="p-4 text-sm text-gray-500">{tx.type}</td>
                         <td
-                    className={`p-4 text-sm font-medium text-right whitespace-nowrap ${tx.amount < 0 ? 'text-gray-900' : 'text-green-600'}`}>
-                    
+                          className={`p-4 text-sm font-medium text-right whitespace-nowrap ${tx.amount < 0 ? 'text-gray-900' : 'text-green-600'}`}>
                           {tx.amount > 0 ? '+' : ''}
                           {tx.amount.toFixed(2)}
                         </td>
                       </tr>
-                )}
+                    ))}
                   </tbody>
                 </table>
               </div>
-          }
+            )}
           </div>
-        }
+        )}
       </div>
-    </DashboardLayout>);
-
+    </DashboardLayout>
+  );
 }
