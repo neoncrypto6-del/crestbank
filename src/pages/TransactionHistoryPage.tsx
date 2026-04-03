@@ -9,27 +9,28 @@ import {
   Download,
   Landmark,
   TrendingUp,
-  Receipt } from
-'lucide-react';
+  Receipt } from 'lucide-react';
+
 export function TransactionHistoryPage() {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (user) {
       fetchTransactions();
     }
   }, [user]);
+
   const fetchTransactions = async () => {
     try {
-      const { data, error } = await supabase.
-      from('transactions').
-      select('*').
-      eq('user_id', user?.id).
-      order('created_at', {
-        ascending: false
-      });
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('created_at', { ascending: false });
+
       if (error) throw error;
       if (data) setTransactions(data);
     } catch (err) {
@@ -38,22 +39,24 @@ export function TransactionHistoryPage() {
       setLoading(false);
     }
   };
+
   const getTxIcon = (type: string) => {
     switch (type) {
       case 'Transfer':
-        return <ArrowRightLeft className="w-5 h-5 text-blue-500" />;
+        return <ArrowRightLeft className="w-5 h-5 text-green-600" />;
       case 'Deposit':
-        return <Download className="w-5 h-5 text-green-500" />;
+        return <Download className="w-5 h-5 text-green-600" />;
       case 'Withdrawal':
         return <Landmark className="w-5 h-5 text-gray-500" />;
       case 'Investment':
-        return <TrendingUp className="w-5 h-5 text-purple-500" />;
+        return <TrendingUp className="w-5 h-5 text-green-600" />;
       case 'Payment':
         return <Receipt className="w-5 h-5 text-orange-500" />;
       default:
         return <ArrowRightLeft className="w-5 h-5 text-gray-500" />;
     }
   };
+
   return (
     <DashboardLayout title="Transaction History" showBack>
       <div className="max-w-4xl mx-auto">
@@ -64,22 +67,21 @@ export function TransactionHistoryPage() {
             </h2>
           </div>
 
-          {loading ?
-          <div className="p-12 text-center text-gray-500">
+          {loading ? (
+            <div className="p-12 text-center text-gray-500">
               Loading transactions...
-            </div> :
-          transactions.length === 0 ?
-          <div className="p-12 text-center text-gray-500">
+            </div>
+          ) : transactions.length === 0 ? (
+            <div className="p-12 text-center text-gray-500">
               No transactions found.
-            </div> :
-
-          <div className="divide-y divide-gray-100">
-              {transactions.map((tx) =>
-            <div
-              key={tx.id}
-              onClick={() => setSelectedTx(tx)}
-              className="p-4 hover:bg-gray-50 cursor-pointer flex items-center justify-between transition-colors">
-              
+            </div>
+          ) : (
+            <div className="divide-y divide-gray-100">
+              {transactions.map((tx) => (
+                <div
+                  key={tx.id}
+                  onClick={() => setSelectedTx(tx)}
+                  className="p-4 hover:bg-gray-50 cursor-pointer flex items-center justify-between transition-colors">
                   <div className="flex items-center">
                     <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-4">
                       {getTxIcon(tx.type)}
@@ -96,8 +98,7 @@ export function TransactionHistoryPage() {
                   </div>
                   <div className="text-right">
                     <p
-                  className={`font-semibold ${tx.amount < 0 ? 'text-gray-900' : 'text-green-600'}`}>
-                  
+                      className={`font-semibold ${tx.amount < 0 ? 'text-gray-900' : 'text-green-600'}`}>
                       {tx.amount > 0 ? '+' : ''}
                       {tx.amount.toFixed(2)}
                     </p>
@@ -106,18 +107,17 @@ export function TransactionHistoryPage() {
                     </p>
                   </div>
                 </div>
-            )}
+              ))}
             </div>
-          }
+          )}
         </div>
       </div>
 
-      {selectedTx &&
-      <TransactionReceipt
-        tx={selectedTx}
-        onClose={() => setSelectedTx(null)} />
-
-      }
-    </DashboardLayout>);
-
+      {selectedTx && (
+        <TransactionReceipt
+          transaction={selectedTx}
+          onClose={() => setSelectedTx(null)} />
+      )}
+    </DashboardLayout>
+  );
 }
