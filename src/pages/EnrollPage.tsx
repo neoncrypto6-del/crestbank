@@ -74,7 +74,7 @@ export function EnrollPage() {
       <main className="flex-grow flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-8">
           <h1 className="text-3xl font-light text-gray-900 mb-2">
-            Enroll in Chase Online℠
+            Enroll in Crest Online℠
           </h1>
           <p className="text-gray-600 mb-8">
             Please provide your information below to set up your account.
