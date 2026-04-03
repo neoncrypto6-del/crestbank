@@ -28,7 +28,7 @@ export function ProductCards() {
 
           {/* Card 2: Crest Sapphire Preferred */}
           <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-            <div className="bg-[#003A70] text-white p-6 flex justify-between items-center h-24">
+            <div className="bg-[#117A3E] text-white p-6 flex justify-between items-center h-24">
               <h3 className="text-xl font-semibold pr-4">
                 Crest Sapphire Preferred®
               </h3>
