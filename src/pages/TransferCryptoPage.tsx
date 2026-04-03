@@ -4,17 +4,19 @@ import { PinModal } from '../components/PinModal';
 import { useAuth } from '../lib/auth';
 import { supabase } from '../lib/supabase';
 import { Bitcoin, ArrowRight } from 'lucide-react';
+
 const CRYPTO_OPTIONS = [
-'Bitcoin (BTC)',
-'Ethereum (ETH)',
-'Solana (SOL)',
-'BNB Smart Chain',
-'USDT (ERC20)',
-'USDC (ERC20)',
-'Dogecoin (DOGE)',
-'Tron (TRX)',
-'XRP',
-'Litecoin (LTC)'];
+  'Bitcoin (BTC)',
+  'Ethereum (ETH)',
+  'Solana (SOL)',
+  'BNB Smart Chain',
+  'USDT (ERC20)',
+  'USDC (ERC20)',
+  'Dogecoin (DOGE)',
+  'Tron (TRX)',
+  'XRP',
+  'Litecoin (LTC)'
+];
 
 export function TransferCryptoPage() {
   const { user, refreshUser } = useAuth();
@@ -25,6 +27,7 @@ export function TransferCryptoPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const handleTransferClick = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -43,42 +46,49 @@ export function TransferCryptoPage() {
     }
     setIsPinModalOpen(true);
   };
+
   const executeTransfer = async () => {
     setIsPinModalOpen(false);
     setLoading(true);
     setError('');
     try {
       if (!user) throw new Error('Not authenticated');
+
       const numAmount = parseFloat(amount);
       const newBalance = user.balance - numAmount;
+
       // Update user balance
-      const { error: updateError } = await supabase.
-      from('users').
-      update({
-        balance: newBalance
-      }).
-      eq('id', user.id);
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ balance: newBalance })
+        .eq('id', user.id);
+
       if (updateError) throw updateError;
+
       // Create transaction record
       const { error: txError } = await supabase.from('transactions').insert([
-      {
-        user_id: user.id,
-        type: 'Transfer',
-        amount: -numAmount,
-        description: `Crypto Transfer (${cryptoType})`,
-        recipient_details: {
-          wallet: walletAddress,
-          crypto: cryptoType
-        },
-        status: 'completed'
-      }]
-      );
+        {
+          user_id: user.id,
+          type: 'Transfer',
+          amount: -numAmount,
+          description: `Crypto Transfer (${cryptoType})`,
+          recipient_details: {
+            wallet: walletAddress,
+            crypto: cryptoType
+          },
+          status: 'completed'
+        }
+      ]);
+
       if (txError) throw txError;
+
       setSuccess(true);
       await refreshUser();
+
       // Reset form
       setWalletAddress('');
       setAmount('');
+
       setTimeout(() => {
         setSuccess(false);
       }, 3000);
@@ -88,13 +98,14 @@ export function TransferCryptoPage() {
       setLoading(false);
     }
   };
+
   return (
     <DashboardLayout title="Transfer Crypto" showBack>
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
           <div className="flex items-center mb-6">
-            <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mr-4">
-              <Bitcoin className="w-6 h-6 text-[#0060AF]" />
+            <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mr-4">
+              <Bitcoin className="w-6 h-6 text-green-600" />
             </div>
             <div>
               <h2 className="text-xl font-semibold text-gray-900">
@@ -106,16 +117,16 @@ export function TransferCryptoPage() {
             </div>
           </div>
 
-          {error &&
-          <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg text-sm">
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg text-sm">
               {error}
             </div>
-          }
-          {success &&
-          <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg text-sm">
+          )}
+          {success && (
+            <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg text-sm">
               Transfer successful!
             </div>
-          }
+          )}
 
           <form onSubmit={handleTransferClick} className="space-y-6">
             <div>
@@ -125,13 +136,12 @@ export function TransferCryptoPage() {
               <select
                 value={cryptoType}
                 onChange={(e) => setCryptoType(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] focus:border-transparent outline-none">
-                
-                {CRYPTO_OPTIONS.map((opt) =>
-                <option key={opt} value={opt}>
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] focus:border-transparent outline-none">
+                {CRYPTO_OPTIONS.map((opt) => (
+                  <option key={opt} value={opt}>
                     {opt}
                   </option>
-                )}
+                ))}
               </select>
             </div>
 
@@ -144,8 +154,7 @@ export function TransferCryptoPage() {
                 value={walletAddress}
                 onChange={(e) => setWalletAddress(e.target.value)}
                 placeholder="Enter wallet address"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] focus:border-transparent outline-none font-mono text-sm" />
-              
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] focus:border-transparent outline-none font-mono text-sm" />
             </div>
 
             <div>
@@ -162,16 +171,14 @@ export function TransferCryptoPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full pl-8 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060AF] focus:border-transparent outline-none" />
-                
+                  className="w-full pl-8 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] focus:border-transparent outline-none" />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0060AF] hover:bg-blue-800 text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center disabled:opacity-70">
-              
+              className="w-full bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-4 px-6 rounded-lg transition-colors flex items-center justify-center disabled:opacity-70">
               {loading ? 'Processing...' : 'Transfer Now'}
               {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
             </button>
@@ -183,7 +190,6 @@ export function TransferCryptoPage() {
         isOpen={isPinModalOpen}
         onClose={() => setIsPinModalOpen(false)}
         onSuccess={executeTransfer} />
-      
-    </DashboardLayout>);
-
+    </DashboardLayout>
+  );
 }
