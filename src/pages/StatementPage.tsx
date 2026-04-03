@@ -1,30 +1,54 @@
-import React, { useState } from "react";
-import { DashboardLayout } from "../components/DashboardLayout";
-import { useAuth } from "../lib/auth";
-import { supabase } from "../lib/supabase";
-import { FileText, Download, Search } from "lucide-react";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-
-interface Transaction {
-  id: string;
-  description: string;
-  type: string;
-  amount: number;
-  created_at: string;
-}
+import React, { useState } from 'react';
+import { DashboardLayout } from '../components/DashboardLayout';
+import { useAuth } from '../lib/auth';
+import { supabase } from '../lib/supabase';
+import { Transaction } from '../lib/types';
+import { FileText, Download, Search } from 'lucide-react';
 
 export function StatementPage() {
   const { user } = useAuth();
 
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
-
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [openingBalance, setOpeningBalance] = useState(0);
-
   const [loading, setLoading] = useState(false);
-  const [searched, setSearched] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+
+  const handleGenerate = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!user || !fromDate || !toDate) return;
+
+    setLoading(true);
+    setHasSearched(true);
+
+    try {
+      const end = new Date(toDate);
+      end.setDate(end.getDate() + 1);
+
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('created_at', new Date(fromDate).toISOString())
+        .lt('created_at', end.toISOString())
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+
+      setTransactions(data || []);
+    } catch (err) {
+      console.error('Error fetching statement:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDownload = () => {
+    window.print();
+  };
+
+  /* ---------------------- STATEMENT CALCULATIONS ---------------------- */
 
   const totalIn = transactions
     .filter((t) => t.amount > 0)
@@ -34,243 +58,308 @@ export function StatementPage() {
     .filter((t) => t.amount < 0)
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
-  const closingBalance = openingBalance + totalIn - totalOut;
+  const openingBalance = 0;
 
-  const handleGenerate = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const runningTransactions = transactions.map((tx, index) => {
+    const previousBalance =
+      index === 0
+        ? openingBalance
+        : runningTransactionsTemp[index - 1].balance;
 
-    if (!user || !fromDate || !toDate) return;
+    const balance = previousBalance + tx.amount;
 
-    setLoading(true);
-    setSearched(true);
+    return {
+      ...tx,
+      balance,
+    };
+  });
 
-    try {
-      const start = new Date(fromDate);
-      const end = new Date(toDate);
-      end.setDate(end.getDate() + 1);
+  const runningTransactionsTemp: any[] = [];
+  transactions.forEach((tx) => {
+    const previous =
+      runningTransactionsTemp.length === 0
+        ? openingBalance
+        : runningTransactionsTemp[runningTransactionsTemp.length - 1].balance;
 
-      const { data, error } = await supabase
-        .from("transactions")
-        .select("*")
-        .eq("user_id", (user as any).id)
-        .gte("created_at", start.toISOString())
-        .lt("created_at", end.toISOString())
-        .order("created_at", { ascending: true });
-
-      if (error) throw error;
-
-      setTransactions(data || []);
-
-      const { data: previous } = await supabase
-        .from("transactions")
-        .select("amount")
-        .eq("user_id", (user as any).id)
-        .lt("created_at", start.toISOString());
-
-      const opening =
-        previous?.reduce((sum: number, tx: any) => sum + tx.amount, 0) || 0;
-
-      setOpeningBalance(opening);
-    } catch (err) {
-      console.error("Statement error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-
-    let runningBalance = openingBalance;
-
-    const rows = transactions.map((tx) => {
-      runningBalance += tx.amount;
-
-      return [
-        new Date(tx.created_at).toLocaleDateString(),
-        tx.description,
-        tx.type,
-        tx.amount > 0 ? `+${tx.amount.toFixed(2)}` : tx.amount.toFixed(2),
-        runningBalance.toFixed(2),
-      ];
+    runningTransactionsTemp.push({
+      ...tx,
+      balance: previous + tx.amount,
     });
+  });
 
-    doc.setFontSize(18);
-    doc.text("Account Statement", 14, 20);
-
-    doc.setFontSize(11);
-
-    doc.text(
-      `Account Holder: ${(user as any)?.full_name || "Account Holder"}`,
-      14,
-      30
-    );
-    doc.text(
-      `Account Number: ${(user as any)?.account_number || "0000000000"}`,
-      14,
-      36
-    );
-    doc.text(
-      `Routing Number: ${(user as any)?.routing_number || "000000000"}`,
-      14,
-      42
-    );
-
-    doc.text(`Statement Period: ${fromDate} to ${toDate}`, 14, 48);
-
-    doc.text(`Opening Balance: $${openingBalance.toFixed(2)}`, 14, 60);
-    doc.text(`Total Money In: $${totalIn.toFixed(2)}`, 14, 66);
-    doc.text(`Total Money Out: $${totalOut.toFixed(2)}`, 14, 72);
-    doc.text(`Closing Balance: $${closingBalance.toFixed(2)}`, 14, 78);
-
-    (doc as any).autoTable({
-      startY: 90,
-      head: [["Date", "Description", "Type", "Amount", "Balance"]],
-      body: rows,
-    });
-
-    doc.save(`statement-${fromDate}-to-${toDate}.pdf`);
-  };
+  const closingBalance =
+    runningTransactionsTemp.length > 0
+      ? runningTransactionsTemp[runningTransactionsTemp.length - 1].balance
+      : 0;
 
   return (
     <DashboardLayout title="Account Statement" showBack>
       <div className="max-w-5xl mx-auto">
-        {/* Statement Form */}
 
-        <div className="bg-white border rounded-xl p-6 mb-8">
+        {/* PRINT HEADER */}
+
+        <div className="hidden print:block mb-8 border-b-2 border-[#117A3E] pb-6">
+
+          <div className="flex justify-between items-start">
+
+            <img
+              src="/chasebank.png"
+              alt="Crest"
+              className="h-8"
+            />
+
+            <div className="text-right">
+
+              <h1 className="text-2xl font-bold text-[#117A3E]">
+                Account Statement
+              </h1>
+
+              <p className="text-gray-600">
+                Period: {fromDate} to {toDate}
+              </p>
+
+            </div>
+
+          </div>
+
+          <div className="mt-8 grid grid-cols-2 gap-8">
+
+            <div>
+
+              <h3 className="font-bold text-gray-900">
+                Account Holder
+              </h3>
+
+              <p>{user?.full_name}</p>
+              <p>{user?.address}</p>
+
+            </div>
+
+            <div className="text-right">
+
+              <h3 className="font-bold text-gray-900">
+                Account Details
+              </h3>
+
+              <p>Account: {user?.account_number}</p>
+              <p>Routing: {user?.routing_number}</p>
+              <p>Type: {user?.account_type}</p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* CONTROLS */}
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8 print:hidden">
+
           <form
             onSubmit={handleGenerate}
             className="flex flex-col md:flex-row gap-4 items-end"
           >
-            <div className="flex-1">
-              <label className="text-sm font-medium block mb-2">
+
+            <div className="flex-1 w-full">
+
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 From Date
               </label>
 
               <input
                 type="date"
-                required
                 value={fromDate}
                 onChange={(e) => setFromDate(e.target.value)}
-                className="w-full border p-3 rounded-lg"
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg"
               />
+
             </div>
 
-            <div className="flex-1">
-              <label className="text-sm font-medium block mb-2">
+            <div className="flex-1 w-full">
+
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 To Date
               </label>
 
               <input
                 type="date"
-                required
                 value={toDate}
                 onChange={(e) => setToDate(e.target.value)}
-                className="w-full border p-3 rounded-lg"
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg"
               />
+
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="bg-[#117A3E] text-white px-6 py-3 rounded-lg flex items-center"
+              className="w-full md:w-auto bg-[#117A3E] text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center"
             >
-              <Search className="w-5 h-5 mr-2" />
-              {loading ? "Loading..." : "Generate"}
+
+              {loading ? 'Loading...' : (
+                <>
+                  <Search className="w-5 h-5 mr-2"/>
+                  Generate
+                </>
+              )}
+
             </button>
+
           </form>
+
         </div>
 
-        {/* Results */}
+        {/* RESULTS */}
 
-        {searched && (
-          <div className="bg-white border rounded-xl overflow-hidden">
-            <div className="p-6 border-b flex justify-between items-center">
-              <h3 className="font-semibold text-lg">Statement Results</h3>
+        {hasSearched && (
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none">
+
+            <div className="p-6 border-b flex justify-between items-center print:hidden">
+
+              <h3 className="text-lg font-semibold text-gray-900">
+                Statement Results
+              </h3>
 
               {transactions.length > 0 && (
+
                 <button
-                  onClick={downloadPDF}
-                  className="text-[#117A3E] flex items-center"
+                  onClick={handleDownload}
+                  className="text-[#117A3E] font-medium flex items-center"
                 >
-                  <Download className="w-5 h-5 mr-2" />
+
+                  <Download className="w-5 h-5 mr-1"/>
                   Download PDF
+
                 </button>
+
               )}
+
             </div>
 
-            {transactions.length === 0 ? (
-              <div className="p-12 text-center text-gray-500">
-                <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p>No transactions found for this date range.</p>
-              </div>
-            ) : (
-              <div className="p-6 space-y-6">
-                {/* Summary */}
+            {/* SUMMARY */}
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-gray-50 p-4 rounded">
-                    <p className="text-sm text-gray-500">Opening Balance</p>
-                    <p className="font-bold">${openingBalance.toFixed(2)}</p>
-                  </div>
+            {transactions.length > 0 && (
 
-                  <div className="bg-gray-50 p-4 rounded">
-                    <p className="text-sm text-gray-500">Total In</p>
-                    <p className="font-bold text-green-600">
-                      +${totalIn.toFixed(2)}
-                    </p>
-                  </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 border-b">
 
-                  <div className="bg-gray-50 p-4 rounded">
-                    <p className="text-sm text-gray-500">Total Out</p>
-                    <p className="font-bold text-red-600">
-                      -${totalOut.toFixed(2)}
-                    </p>
-                  </div>
-
-                  <div className="bg-gray-50 p-4 rounded">
-                    <p className="text-sm text-gray-500">Closing Balance</p>
-                    <p className="font-bold text-[#117A3E]">
-                      ${closingBalance.toFixed(2)}
-                    </p>
-                  </div>
+                <div>
+                  <p className="text-sm text-gray-500">Opening Balance</p>
+                  <p className="font-bold">${openingBalance.toFixed(2)}</p>
                 </div>
 
-                {/* Transactions */}
+                <div>
+                  <p className="text-sm text-gray-500">Money In</p>
+                  <p className="font-bold text-green-600">
+                    +${totalIn.toFixed(2)}
+                  </p>
+                </div>
 
-                <table className="w-full text-left">
+                <div>
+                  <p className="text-sm text-gray-500">Money Out</p>
+                  <p className="font-bold text-red-600">
+                    -${totalOut.toFixed(2)}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500">Closing Balance</p>
+                  <p className="font-bold text-[#117A3E]">
+                    ${closingBalance.toFixed(2)}
+                  </p>
+                </div>
+
+              </div>
+
+            )}
+
+            {/* TABLE */}
+
+            {transactions.length === 0 ? (
+
+              <div className="p-12 text-center text-gray-500">
+
+                <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300"/>
+
+                <p>No transactions found for the selected period.</p>
+
+              </div>
+
+            ) : (
+
+              <div className="overflow-x-auto">
+
+                <table className="w-full text-left border-collapse">
+
                   <thead>
-                    <tr className="border-b">
-                      <th className="p-3">Date</th>
-                      <th className="p-3">Description</th>
-                      <th className="p-3">Type</th>
-                      <th className="p-3 text-right">Amount</th>
+
+                    <tr className="bg-gray-50 text-gray-600 text-sm uppercase">
+
+                      <th className="p-4 border-b">Date</th>
+                      <th className="p-4 border-b">Description</th>
+                      <th className="p-4 border-b">Type</th>
+                      <th className="p-4 border-b text-right">Amount</th>
+                      <th className="p-4 border-b text-right">Balance</th>
+
                     </tr>
+
                   </thead>
 
-                  <tbody>
-                    {transactions.map((tx) => (
-                      <tr key={tx.id} className="border-b">
-                        <td className="p-3">
+                  <tbody className="divide-y">
+
+                    {runningTransactionsTemp.map((tx) => (
+
+                      <tr key={tx.id}>
+
+                        <td className="p-4 text-sm">
                           {new Date(tx.created_at).toLocaleDateString()}
                         </td>
 
-                        <td className="p-3">{tx.description}</td>
-
-                        <td className="p-3">{tx.type}</td>
-
-                        <td className="p-3 text-right">
-                          {tx.amount > 0 ? "+" : ""}
-                          {tx.amount.toFixed(2)}
+                        <td className="p-4 text-sm">
+                          {tx.description}
                         </td>
+
+                        <td className="p-4 text-sm">
+                          {tx.type}
+                        </td>
+
+                        <td
+                          className={`p-4 text-right font-medium ${
+                            tx.amount > 0
+                              ? 'text-green-600'
+                              : 'text-gray-900'
+                          }`}
+                        >
+
+                          {tx.amount > 0 ? '+' : ''}
+                          {tx.amount.toFixed(2)}
+
+                        </td>
+
+                        <td className="p-4 text-right font-semibold">
+
+                          ${tx.balance.toFixed(2)}
+
+                        </td>
+
                       </tr>
+
                     ))}
+
                   </tbody>
+
                 </table>
+
               </div>
+
             )}
+
           </div>
+
         )}
+
       </div>
     </DashboardLayout>
   );
