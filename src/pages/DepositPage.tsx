@@ -1,6 +1,8 @@
 import React from 'react';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { useAuth } from '../lib/auth';
 import { Building, Bitcoin, Gift, Smartphone } from 'lucide-react';
+
 export function DepositPage() {
   return (
     <DashboardLayout title="Deposit Funds" showBack>
@@ -12,10 +14,9 @@ export function DepositPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <a
             href="#/deposit/bank"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#0060AF] hover:shadow-md transition-all group">
-            
-            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#0060AF] transition-colors flex-shrink-0">
-              <Building className="w-8 h-8 text-[#0060AF] group-hover:text-white transition-colors" />
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#117A3E] hover:shadow-md transition-all group">
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#117A3E] transition-colors flex-shrink-0">
+              <Building className="w-8 h-8 text-[#117A3E] group-hover:text-white transition-colors" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
@@ -29,10 +30,9 @@ export function DepositPage() {
 
           <a
             href="#/deposit/crypto"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#0060AF] hover:shadow-md transition-all group">
-            
-            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#0060AF] transition-colors flex-shrink-0">
-              <Bitcoin className="w-8 h-8 text-[#0060AF] group-hover:text-white transition-colors" />
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#117A3E] hover:shadow-md transition-all group">
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#117A3E] transition-colors flex-shrink-0">
+              <Bitcoin className="w-8 h-8 text-[#117A3E] group-hover:text-white transition-colors" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
@@ -46,10 +46,9 @@ export function DepositPage() {
 
           <a
             href="#/deposit/gift-card"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#0060AF] hover:shadow-md transition-all group">
-            
-            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#0060AF] transition-colors flex-shrink-0">
-              <Gift className="w-8 h-8 text-[#0060AF] group-hover:text-white transition-colors" />
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#117A3E] hover:shadow-md transition-all group">
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#117A3E] transition-colors flex-shrink-0">
+              <Gift className="w-8 h-8 text-[#117A3E] group-hover:text-white transition-colors" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">Gift Card</h3>
@@ -61,10 +60,9 @@ export function DepositPage() {
 
           <a
             href="#/deposit/cashapp"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#0060AF] hover:shadow-md transition-all group">
-            
-            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#0060AF] transition-colors flex-shrink-0">
-              <Smartphone className="w-8 h-8 text-[#0060AF] group-hover:text-white transition-colors" />
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex items-center hover:border-[#117A3E] hover:shadow-md transition-all group">
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mr-6 group-hover:bg-[#117A3E] transition-colors flex-shrink-0">
+              <Smartphone className="w-8 h-8 text-[#117A3E] group-hover:text-white transition-colors" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">Cash App</h3>
@@ -75,6 +73,6 @@ export function DepositPage() {
           </a>
         </div>
       </div>
-    </DashboardLayout>);
-
+    </DashboardLayout>
+  );
 }
