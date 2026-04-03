@@ -1,191 +1,294 @@
-import React, { useState } from 'react';
-import { DashboardLayout } from '../components/DashboardLayout';
-import { useAuth } from '../lib/auth';
-import { supabase } from '../lib/supabase';
-import { Transaction } from '../lib/types';
-import { FileText, Download, Search } from 'lucide-react';
+import React, { useState } from 'react'
+import { DashboardLayout } from '../components/DashboardLayout'
+import { useAuth } from '../lib/auth'
+import { supabase } from '../lib/supabase'
+import { Transaction } from '../lib/types'
+import { FileText, Download, Search } from 'lucide-react'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 export function StatementPage() {
-  const { user } = useAuth();
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
+  const { user } = useAuth()
+
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [openingBalance, setOpeningBalance] = useState(0)
+
+  const [loading, setLoading] = useState(false)
+  const [hasSearched, setHasSearched] = useState(false)
+
+  const totalIn = transactions
+    .filter((tx) => tx.amount > 0)
+    .reduce((sum, tx) => sum + tx.amount, 0)
+
+  const totalOut = transactions
+    .filter((tx) => tx.amount < 0)
+    .reduce((sum, tx) => sum + Math.abs(tx.amount), 0)
+
+  const closingBalance = openingBalance + totalIn - totalOut
 
   const handleGenerate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user || !fromDate || !toDate) return;
-    setLoading(true);
-    setHasSearched(true);
-    try {
-      // Add 1 day to toDate to include the whole day
-      const end = new Date(toDate);
-      end.setDate(end.getDate() + 1);
+    e.preventDefault()
 
+    if (!user || !fromDate || !toDate) return
+
+    setLoading(true)
+    setHasSearched(true)
+
+    try {
+      const start = new Date(fromDate)
+      const end = new Date(toDate)
+      end.setDate(end.getDate() + 1)
+
+      // Fetch transactions within range
       const { data, error } = await supabase
         .from('transactions')
         .select('*')
         .eq('user_id', user.id)
-        .gte('created_at', new Date(fromDate).toISOString())
+        .gte('created_at', start.toISOString())
         .lt('created_at', end.toISOString())
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: true })
 
-      if (error) throw error;
-      setTransactions(data || []);
+      if (error) throw error
+
+      setTransactions(data || [])
+
+      // Fetch transactions BEFORE start date to compute opening balance
+      const { data: previous } = await supabase
+        .from('transactions')
+        .select('amount')
+        .eq('user_id', user.id)
+        .lt('created_at', start.toISOString())
+
+      const opening =
+        previous?.reduce((sum, tx) => sum + tx.amount, 0) || 0
+
+      setOpeningBalance(opening)
+
     } catch (err) {
-      console.error('Error fetching statement:', err);
+      console.error('Statement error', err)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleDownload = () => {
-    window.print();
-  };
+    const doc = new jsPDF()
+
+    let runningBalance = openingBalance
+
+    const rows = transactions.map((tx) => {
+      runningBalance += tx.amount
+
+      return [
+        new Date(tx.created_at).toLocaleDateString(),
+        tx.description,
+        tx.type,
+        tx.amount > 0 ? `+${tx.amount.toFixed(2)}` : tx.amount.toFixed(2),
+        runningBalance.toFixed(2),
+      ]
+    })
+
+    doc.setFontSize(18)
+    doc.text('Account Statement', 14, 20)
+
+    doc.setFontSize(11)
+    doc.text(`Account Holder: ${user?.full_name}`, 14, 30)
+    doc.text(`Account Number: ${user?.account_number}`, 14, 36)
+    doc.text(`Routing Number: ${user?.routing_number}`, 14, 42)
+    doc.text(`Statement Period: ${fromDate} to ${toDate}`, 14, 48)
+
+    doc.text(`Opening Balance: $${openingBalance.toFixed(2)}`, 14, 60)
+    doc.text(`Total Money In: $${totalIn.toFixed(2)}`, 14, 66)
+    doc.text(`Total Money Out: $${totalOut.toFixed(2)}`, 14, 72)
+    doc.text(`Closing Balance: $${closingBalance.toFixed(2)}`, 14, 78)
+
+    autoTable(doc, {
+      startY: 90,
+      head: [['Date', 'Description', 'Type', 'Amount', 'Balance']],
+      body: rows,
+    })
+
+    doc.save(`statement-${fromDate}-to-${toDate}.pdf`)
+  }
 
   return (
     <DashboardLayout title="Account Statement" showBack>
       <div className="max-w-5xl mx-auto">
-        {/* Print-only header */}
-        <div className="hidden print:block mb-8 border-b-2 border-[#117A3E] pb-6">
-          <div className="flex justify-between items-start">
-            <img
-              src="/chasebank.png"
-              alt="Crest"
-              className="h-8" />
-            <div className="text-right">
-              <h1 className="text-2xl font-bold text-[#117A3E]">
-                Account Statement
-              </h1>
-              <p className="text-gray-600">
-                Period: {fromDate} to {toDate}
-              </p>
-            </div>
-          </div>
-          <div className="mt-8 grid grid-cols-2 gap-8">
-            <div>
-              <h3 className="font-bold text-gray-900">Account Holder</h3>
-              <p>{user?.full_name}</p>
-              <p>{user?.address}</p>
-            </div>
-            <div className="text-right">
-              <h3 className="font-bold text-gray-900">Account Details</h3>
-              <p>Account: {user?.account_number}</p>
-              <p>Routing: {user?.routing_number}</p>
-              <p>Type: {user?.account_type}</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Controls (hidden on print) */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8 print:hidden">
+        {/* Controls */}
+        <div className="bg-white rounded-xl shadow-sm border p-6 mb-8">
+
           <form
             onSubmit={handleGenerate}
             className="flex flex-col md:flex-row gap-4 items-end">
-            <div className="flex-1 w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+
+            <div className="flex-1">
+              <label className="block text-sm font-medium mb-2">
                 From Date
               </label>
+
               <input
                 type="date"
                 value={fromDate}
                 onChange={(e) => setFromDate(e.target.value)}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] focus:border-transparent outline-none" />
+                className="w-full p-3 border rounded-lg"
+              />
             </div>
-            <div className="flex-1 w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+
+            <div className="flex-1">
+              <label className="block text-sm font-medium mb-2">
                 To Date
               </label>
+
               <input
                 type="date"
                 value={toDate}
                 onChange={(e) => setToDate(e.target.value)}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#117A3E] focus:border-transparent outline-none" />
+                className="w-full p-3 border rounded-lg"
+              />
             </div>
+
             <button
               type="submit"
               disabled={loading}
-              className="w-full md:w-auto bg-[#117A3E] hover:bg-[#0e6332] text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center disabled:opacity-70 h-[50px]">
-              {loading ? (
-                'Loading...'
-              ) : (
+              className="bg-[#117A3E] text-white py-3 px-6 rounded-lg flex items-center">
+
+              {loading ? 'Loading...' : (
                 <>
-                  <Search className="w-5 h-5 mr-2" /> Generate
+                  <Search className="w-5 h-5 mr-2" />
+                  Generate
                 </>
               )}
+
             </button>
+
           </form>
+
         </div>
 
-        {/* Results */}
         {hasSearched && (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden print:border-none print:shadow-none">
-            <div className="p-6 border-b border-gray-200 flex justify-between items-center print:hidden">
-              <h3 className="text-lg font-semibold text-gray-900">
+
+          <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+
+            <div className="p-6 border-b flex justify-between items-center">
+
+              <h3 className="text-lg font-semibold">
                 Statement Results
               </h3>
+
               {transactions.length > 0 && (
                 <button
                   onClick={handleDownload}
-                  className="text-[#117A3E] hover:text-[#0e6332] font-medium flex items-center">
-                  <Download className="w-5 h-5 mr-1" /> Download PDF
+                  className="text-[#117A3E] flex items-center">
+
+                  <Download className="w-5 h-5 mr-2" />
+                  Download PDF
+
                 </button>
               )}
+
             </div>
 
             {transactions.length === 0 ? (
+
               <div className="p-12 text-center text-gray-500">
+
                 <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p>No transactions found for the selected period.</p>
+                <p>No transactions found.</p>
+
               </div>
+
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+
+              <div className="p-6 space-y-4">
+
+                {/* Summary */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                  <div className="bg-gray-50 p-4 rounded">
+                    <p className="text-sm text-gray-500">Opening Balance</p>
+                    <p className="font-bold">${openingBalance.toFixed(2)}</p>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded">
+                    <p className="text-sm text-gray-500">Total In</p>
+                    <p className="font-bold text-green-600">
+                      +${totalIn.toFixed(2)}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded">
+                    <p className="text-sm text-gray-500">Total Out</p>
+                    <p className="font-bold text-red-600">
+                      -${totalOut.toFixed(2)}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded">
+                    <p className="text-sm text-gray-500">Closing Balance</p>
+                    <p className="font-bold text-[#117A3E]">
+                      ${closingBalance.toFixed(2)}
+                    </p>
+                  </div>
+
+                </div>
+
+                {/* Table */}
+                <table className="w-full text-left">
+
                   <thead>
-                    <tr className="bg-gray-50 text-gray-600 text-sm uppercase tracking-wider">
-                      <th className="p-4 font-medium border-b border-gray-200">
-                        Date
-                      </th>
-                      <th className="p-4 font-medium border-b border-gray-200">
-                        Description
-                      </th>
-                      <th className="p-4 font-medium border-b border-gray-200">
-                        Type
-                      </th>
-                      <th className="p-4 font-medium border-b border-gray-200 text-right">
-                        Amount
-                      </th>
+                    <tr className="border-b">
+
+                      <th className="p-3">Date</th>
+                      <th className="p-3">Description</th>
+                      <th className="p-3">Type</th>
+                      <th className="p-3 text-right">Amount</th>
+
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+
+                  <tbody>
+
                     {transactions.map((tx) => (
-                      <tr
-                        key={tx.id}
-                        className="hover:bg-gray-50 print:hover:bg-transparent">
-                        <td className="p-4 text-sm text-gray-900 whitespace-nowrap">
+
+                      <tr key={tx.id} className="border-b">
+
+                        <td className="p-3">
                           {new Date(tx.created_at).toLocaleDateString()}
                         </td>
-                        <td className="p-4 text-sm text-gray-900">
-                          {tx.description}
-                        </td>
-                        <td className="p-4 text-sm text-gray-500">{tx.type}</td>
-                        <td
-                          className={`p-4 text-sm font-medium text-right whitespace-nowrap ${tx.amount < 0 ? 'text-gray-900' : 'text-green-600'}`}>
+
+                        <td className="p-3">{tx.description}</td>
+
+                        <td className="p-3">{tx.type}</td>
+
+                        <td className="p-3 text-right">
+
                           {tx.amount > 0 ? '+' : ''}
                           {tx.amount.toFixed(2)}
+
                         </td>
+
                       </tr>
+
                     ))}
+
                   </tbody>
+
                 </table>
+
               </div>
+
             )}
+
           </div>
+
         )}
+
       </div>
     </DashboardLayout>
-  );
+  )
 }
