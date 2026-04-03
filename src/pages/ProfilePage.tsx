@@ -76,7 +76,7 @@ export function ProfilePage() {
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {/* Header & Avatar */}
-          <div className="bg-[#003A70] p-8 flex flex-col items-center justify-center text-white relative">
+          <div className="bg-[#117A3E] p-8 flex flex-col items-center justify-center text-white relative">
             <div className="relative mb-4 group">
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white bg-gray-200 flex items-center justify-center">
                 {user.profile_picture_url ? (
