@@ -8,7 +8,7 @@ export function FreedomCardSection() {
           <div className="w-full md:w-1/2 flex justify-center">
             <img
               src="/Freedom_Unlimited_Card_with_No_Annual_Fee.png"
-              alt="Chase Freedom Unlimited Card"
+              alt="Crest Freedom Unlimited Card"
               className="w-full max-w-md object-contain drop-shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300" />
             
           </div>
