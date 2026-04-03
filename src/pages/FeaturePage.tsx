@@ -19,7 +19,7 @@ export function FeaturePage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="w-full bg-[#003A70] text-white py-16 md:py-24">
+        <section className="w-full bg-[#117A3E] text-white py-16 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6">
