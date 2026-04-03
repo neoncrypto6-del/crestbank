@@ -8,41 +8,43 @@ import {
   Key,
   Hash,
   LogOut,
-  ChevronRight } from
-'lucide-react';
+  ChevronRight } from 'lucide-react';
+
 export function SettingsPage() {
   const { logout } = useAuth();
+
   const menuItems = [
-  {
-    name: 'Profile Information',
-    icon: User,
-    link: '#/settings/profile',
-    desc: 'View your personal details'
-  },
-  {
-    name: 'Document Verification',
-    icon: ShieldCheck,
-    link: '#/settings/verification',
-    desc: 'Upload ID and proof of address'
-  },
-  {
-    name: 'Next of Kin',
-    icon: Users,
-    link: '#/settings/next-of-kin',
-    desc: 'Manage beneficiary details'
-  },
-  {
-    name: 'Change Password',
-    icon: Key,
-    link: '#/settings/change-password',
-    desc: 'Update your login password'
-  },
-  {
-    name: 'Transaction PIN',
-    icon: Hash,
-    link: '#/settings/create-pin',
-    desc: 'Set or change your 4-digit PIN'
-  }];
+    {
+      name: 'Profile Information',
+      icon: User,
+      link: '#/settings/profile',
+      desc: 'View your personal details'
+    },
+    {
+      name: 'Document Verification',
+      icon: ShieldCheck,
+      link: '#/settings/verification',
+      desc: 'Upload ID and proof of address'
+    },
+    {
+      name: 'Next of Kin',
+      icon: Users,
+      link: '#/settings/next-of-kin',
+      desc: 'Manage beneficiary details'
+    },
+    {
+      name: 'Change Password',
+      icon: Key,
+      link: '#/settings/change-password',
+      desc: 'Update your login password'
+    },
+    {
+      name: 'Transaction PIN',
+      icon: Hash,
+      link: '#/settings/create-pin',
+      desc: 'Set or change your 4-digit PIN'
+    }
+  ];
 
   return (
     <DashboardLayout title="Settings" showBack>
@@ -61,8 +63,8 @@ export function SettingsPage() {
                 className={`flex items-center justify-between p-6 hover:bg-gray-50 transition-colors ${index !== menuItems.length - 1 ? 'border-b border-gray-200' : ''}`}>
                 
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mr-4">
-                    <Icon className="w-6 h-6 text-[#0060AF]" />
+                  <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mr-4">
+                    <Icon className="w-6 h-6 text-[#117A3E]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">{item.name}</h3>
@@ -70,19 +72,18 @@ export function SettingsPage() {
                   </div>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
-              </a>);
-
+              </a>
+            );
           })}
         </div>
 
         <button
           onClick={logout}
           className="mt-8 w-full bg-white border border-red-200 text-red-600 font-semibold py-4 rounded-xl shadow-sm hover:bg-red-50 transition-colors flex items-center justify-center">
-          
           <LogOut className="w-5 h-5 mr-2" />
           Sign Out
         </button>
       </div>
-    </DashboardLayout>);
-
+    </DashboardLayout>
+  );
 }
